@@ -346,6 +346,7 @@ const DateSelector: React.FC<DateSelectorProps> = ({ selectedDate, onSelect, onT
                 cell: "h-9 w-9 text-center text-sm p-0 relative focus-within:relative focus-within:z-20",
                 day_selected:
                   "!bg-white !text-black hover:!bg-white hover:!text-black focus:!bg-white focus:!text-black !rounded-md",
+                day_today: "!bg-accent/20 !text-black !rounded-md",
               }}
             />
 
