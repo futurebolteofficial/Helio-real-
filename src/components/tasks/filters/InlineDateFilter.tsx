@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { Calendar, X, Search } from 'lucide-react';
+import { Calendar, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { IconToggle } from '@/components/ui/icon-toggle';
+import { cn } from '@/lib/utils';
 
 interface InlineDateFilterProps {
   isActive: boolean;
@@ -66,31 +66,31 @@ const InlineDateFilter: React.FC<InlineDateFilterProps> = ({
       </div>
 
       {isActive && (
-        <div className="bg-[#252525] border border-[#414141] rounded-[12px] p-3 space-y-2">
-          <div className="relative">
-            <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input
-              type="text"
-              placeholder="Search date presets..."
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              className="pl-8 bg-[#1a1a1a] border-[#414141] text-white placeholder:text-gray-500 h-9 rounded-[8px]"
-            />
-          </div>
+        <div className="bg-[#252525] border border-[#414141] rounded-[12px] p-3 space-y-3">
+          <input
+            type="text"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder="Search date presets..."
+            className="w-full bg-transparent text-white text-sm px-0 py-2 outline-none placeholder-gray-500 border-none"
+          />
 
-          <div className="space-y-1 max-h-48 overflow-y-auto">
+          <div className="flex-1 overflow-auto space-y-2 max-h-[250px]">
             {filteredPresets.map((preset) => (
               <Button
                 key={preset}
                 onClick={() => togglePreset(preset)}
                 variant="ghost"
-                className={`w-full justify-start text-left h-9 rounded-[8px] ${
-                  selectedDate === preset
-                    ? 'bg-white text-black hover:bg-white/90'
-                    : 'text-gray-300 hover:bg-[#1a1a1a]'
-                }`}
+                size="sm"
+                className={cn(
+                  'w-full justify-start text-left bg-[#1b1b1b] text-gray-300 hover:bg-[#2e2e2e] hover:text-white border border-[#414141] rounded-[15px] h-9 text-xs transition-all duration-200',
+                  selectedDate === preset && 'bg-[#2e2e2e] text-white'
+                )}
               >
-                {preset}
+                <span className="flex-1">{preset}</span>
+                {selectedDate === preset && (
+                  <span className="text-green-400">✓</span>
+                )}
               </Button>
             ))}
           </div>
