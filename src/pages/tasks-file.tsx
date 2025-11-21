@@ -473,7 +473,7 @@ const Tasks = () => {
               <div className="bg-transparent max-w-[980px]" style={{ marginBottom: '45px' }}>
                 {/* Card-based task list */}
                 <div className="space-y-3">
-                  {sortSettings.creationDate && !sortSettings.completionStatus ? (
+                  {sortSettings.creationDate ? (
                     getTasksByDateGroup(applyFiltersAndSort(tasks)).map((group) => (
                       <div key={group.date}>
                         <div className="px-4 py-2 mt-4 mb-2">
