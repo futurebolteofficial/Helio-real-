@@ -8,7 +8,6 @@ import { IconToggle } from '@/components/ui/icon-toggle';
 import InlineDateFilter from './filters/InlineDateFilter';
 import InlinePriorityFilter from './filters/InlinePriorityFilter';
 import InlineLabelFilter from './filters/InlineLabelFilter';
-
 interface TasksHeaderProps {
   totalTasks: number;
   completedTasks: number;
@@ -21,14 +20,39 @@ interface TasksHeaderProps {
   setCurrentTaskView: (view: 'drafts' | 'total' | 'completed' | 'pending' | 'deleted') => void;
   onCreateTask: () => void;
   isRotated: boolean;
-  filterSettings?: { date: boolean; priority: boolean; label: boolean };
-  setFilterSettings?: (settings: { date: boolean; priority: boolean; label: boolean }) => void;
-  sortSettings?: { completionStatus: boolean; creationDate: boolean; pages: boolean; chats: boolean };
-  setSortSettings?: (settings: { completionStatus: boolean; creationDate: boolean; pages: boolean; chats: boolean }) => void;
-  filterValues?: { date: string; priorities: string[]; labels: string[] };
-  setFilterValues?: (values: { date: string; priorities: string[]; labels: string[] }) => void;
+  filterSettings?: {
+    date: boolean;
+    priority: boolean;
+    label: boolean;
+  };
+  setFilterSettings?: (settings: {
+    date: boolean;
+    priority: boolean;
+    label: boolean;
+  }) => void;
+  sortSettings?: {
+    completionStatus: boolean;
+    creationDate: boolean;
+    pages: boolean;
+    chats: boolean;
+  };
+  setSortSettings?: (settings: {
+    completionStatus: boolean;
+    creationDate: boolean;
+    pages: boolean;
+    chats: boolean;
+  }) => void;
+  filterValues?: {
+    date: string;
+    priorities: string[];
+    labels: string[];
+  };
+  setFilterValues?: (values: {
+    date: string;
+    priorities: string[];
+    labels: string[];
+  }) => void;
 }
-
 const TasksHeader = ({
   totalTasks,
   completedTasks,
@@ -41,19 +65,30 @@ const TasksHeader = ({
   setCurrentTaskView,
   onCreateTask,
   isRotated,
-  filterSettings = { date: false, priority: false, label: false },
+  filterSettings = {
+    date: false,
+    priority: false,
+    label: false
+  },
   setFilterSettings,
-  sortSettings = { completionStatus: false, creationDate: true, pages: false, chats: false },
+  sortSettings = {
+    completionStatus: false,
+    creationDate: true,
+    pages: false,
+    chats: false
+  },
   setSortSettings,
-  filterValues = { date: '', priorities: [], labels: [] },
+  filterValues = {
+    date: '',
+    priorities: [],
+    labels: []
+  },
   setFilterValues
 }: TasksHeaderProps) => {
   const [displayPopoverOpen, setDisplayPopoverOpen] = useState(false);
   const [sortCollapsed, setSortCollapsed] = useState(true);
   const [filterCollapsed, setFilterCollapsed] = useState(true);
-
-  return (
-    <>
+  return <>
       {/* Header */}
       <div className="flex items-center justify-between p-4 gap-4">
         <div className="flex items-center gap-4">
@@ -61,51 +96,48 @@ const TasksHeader = ({
           <div className="relative mt-7">
             <Popover open={displayPopoverOpen} onOpenChange={setDisplayPopoverOpen}>
               <PopoverTrigger asChild>
-                <Button
-                  className="w-12 h-12 rounded-full transition-all duration-500 hover:scale-105"
-                  style={{ backgroundColor: '#2e2e30' }}
-                  size="icon"
-                >
+                <Button className="w-12 h-12 rounded-full transition-all duration-500 hover:scale-105" style={{
+                backgroundColor: '#2e2e30'
+              }} size="icon">
                   <LayoutGrid className="h-5 w-5 text-white" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent
-                className="w-[300px] h-auto max-h-[500px] p-4 border border-[#414141] shadow-xl overflow-y-auto rounded-[20px]"
-                style={{ background: '#1F1F1F' }}
-                align="start"
-              >
+              <PopoverContent className="w-[300px] h-auto max-h-[500px] p-4 border border-[#414141] shadow-xl overflow-y-auto rounded-[20px]" style={{
+              background: '#1F1F1F'
+            }} align="start">
                 <div className="space-y-4">
                   {/* Layout Section */}
                   <div>
                     <h3 className="text-white font-medium mb-3">Layout</h3>
-                    <div className="flex gap-2" style={{ background: '#2E2E30', borderRadius: '1.5rem', padding: '0px' }}>
-                      {[
-                        { value: 'list', label: 'List', icon: List },
-                        { value: 'board', label: 'Board', icon: Grid3x3 },
-                        { value: 'calendar', label: 'Calendar', icon: Calendar }
-                      ].map((view, index) => {
-                        const IconComponent = view.icon;
-                        const isFirst = index === 0;
-                        const isLast = index === 2;
-                        const borderRadius = isFirst ? 'rounded-l-3xl' : isLast ? 'rounded-r-3xl' : '';
-                        
-                        return (
-                          <button
-                            key={view.value}
-                            onClick={() => {
-                              setCurrentView(view.value);
-                            }}
-                            className={`flex-1 flex flex-col items-center px-3 py-3 ${borderRadius} transition-colors duration-200 ${
-                              currentView === view.value 
-                                ? 'bg-[#414141] text-white' 
-                                : 'text-gray-300 hover:bg-[#353537] hover:text-white'
-                            }`}
-                          >
+                    <div className="flex gap-2" style={{
+                    background: '#2E2E30',
+                    borderRadius: '1.5rem',
+                    padding: '0px'
+                  }}>
+                      {[{
+                      value: 'list',
+                      label: 'List',
+                      icon: List
+                    }, {
+                      value: 'board',
+                      label: 'Board',
+                      icon: Grid3x3
+                    }, {
+                      value: 'calendar',
+                      label: 'Calendar',
+                      icon: Calendar
+                    }].map((view, index) => {
+                      const IconComponent = view.icon;
+                      const isFirst = index === 0;
+                      const isLast = index === 2;
+                      const borderRadius = isFirst ? 'rounded-l-3xl' : isLast ? 'rounded-r-3xl' : '';
+                      return <button key={view.value} onClick={() => {
+                        setCurrentView(view.value);
+                      }} className={`flex-1 flex flex-col items-center px-3 py-3 ${borderRadius} transition-colors duration-200 ${currentView === view.value ? 'bg-[#414141] text-white' : 'text-gray-300 hover:bg-[#353537] hover:text-white'}`}>
                             <IconComponent className="h-5 w-5 mb-1" />
                             <span className="text-xs">{view.label}</span>
-                          </button>
-                        );
-                      })}
+                          </button>;
+                    })}
                     </div>
                   </div>
 
@@ -114,38 +146,42 @@ const TasksHeader = ({
 
                   {/* Sort Section */}
                   <div>
-                    <Collapsible open={!sortCollapsed} onOpenChange={(open) => setSortCollapsed(!open)}>
+                    <Collapsible open={!sortCollapsed} onOpenChange={open => setSortCollapsed(!open)}>
                       <CollapsibleTrigger className="flex items-center justify-between w-full mb-3">
                         <h3 className="text-white font-medium">Sort</h3>
-                        <ChevronDown 
-                          className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${
-                            !sortCollapsed ? 'rotate-180' : ''
-                          }`} 
-                        />
+                        <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${!sortCollapsed ? 'rotate-180' : ''}`} />
                       </CollapsibleTrigger>
                       <p className="text-xs text-gray-400 mb-3">
                         Sort Tasks by due date, priority, completion status, or creation date.
                       </p>
                       <CollapsibleContent className="space-y-3">
-                        {[
-                          { key: 'completionStatus', label: 'Completion Status', icon: CheckCircle },
-                          { key: 'creationDate', label: 'Creation Date', icon: Clock },
-                          { key: 'pages', label: 'Pages', icon: FileText },
-                          { key: 'chats', label: 'Chats', icon: MessageSquare }
-                        ].map((sortOption) => (
-                          <div key={sortOption.key} className="flex items-center justify-between">
+                        {[{
+                        key: 'completionStatus',
+                        label: 'Completion Status',
+                        icon: CheckCircle
+                      }, {
+                        key: 'creationDate',
+                        label: 'Creation Date',
+                        icon: Clock
+                      }, {
+                        key: 'pages',
+                        label: 'Pages',
+                        icon: FileText
+                      }, {
+                        key: 'chats',
+                        label: 'Chats',
+                        icon: MessageSquare
+                      }].map(sortOption => <div key={sortOption.key} className="flex items-center justify-between">
                             <span className="text-gray-300 text-sm">{sortOption.label}</span>
-                            <IconToggle
-                              icon={sortOption.icon}
-                              checked={sortSettings[sortOption.key as keyof typeof sortSettings]}
-                              onCheckedChange={(checked) => {
-                                const newSettings = { ...sortSettings, [sortOption.key]: checked };
-                                setSortSettings?.(newSettings);
-                                localStorage.setItem('kario-sort-settings', JSON.stringify(newSettings));
-                              }}
-                            />
-                          </div>
-                        ))}
+                            <IconToggle icon={sortOption.icon} checked={sortSettings[sortOption.key as keyof typeof sortSettings]} onCheckedChange={checked => {
+                          const newSettings = {
+                            ...sortSettings,
+                            [sortOption.key]: checked
+                          };
+                          setSortSettings?.(newSettings);
+                          localStorage.setItem('kario-sort-settings', JSON.stringify(newSettings));
+                        }} />
+                          </div>)}
                       </CollapsibleContent>
                     </Collapsible>
                   </div>
@@ -155,66 +191,65 @@ const TasksHeader = ({
 
                   {/* Filter Section */}
                   <div>
-                    <Collapsible open={!filterCollapsed} onOpenChange={(open) => setFilterCollapsed(!open)}>
+                    <Collapsible open={!filterCollapsed} onOpenChange={open => setFilterCollapsed(!open)}>
                       <CollapsibleTrigger className="flex items-center justify-between w-full mb-3">
                         <h3 className="text-white font-medium">Filter</h3>
-                        <ChevronDown
-                          className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${
-                            !filterCollapsed ? 'rotate-180' : ''
-                          }`}
-                        />
+                        <ChevronDown className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${!filterCollapsed ? 'rotate-180' : ''}`} />
                       </CollapsibleTrigger>
                       <p className="text-xs text-gray-400 mb-3">
                         Find Tasks by date, priority, or label.
                       </p>
                       <CollapsibleContent className="space-y-4">
                         {/* Date Filter */}
-                        <InlineDateFilter
-                          isActive={filterSettings.date}
-                          selectedDate={filterValues.date}
-                          onToggle={(checked) => {
-                            const newSettings = { ...filterSettings, date: checked };
-                            setFilterSettings?.(newSettings);
-                            localStorage.setItem('kario-filter-settings', JSON.stringify(newSettings));
-                          }}
-                          onSelect={(date) => {
-                            const newValues = { ...filterValues, date };
-                            setFilterValues?.(newValues);
-                            localStorage.setItem('kario-filter-values', JSON.stringify(newValues));
-                          }}
-                        />
+                        <InlineDateFilter isActive={filterSettings.date} selectedDate={filterValues.date} onToggle={checked => {
+                        const newSettings = {
+                          ...filterSettings,
+                          date: checked
+                        };
+                        setFilterSettings?.(newSettings);
+                        localStorage.setItem('kario-filter-settings', JSON.stringify(newSettings));
+                      }} onSelect={date => {
+                        const newValues = {
+                          ...filterValues,
+                          date
+                        };
+                        setFilterValues?.(newValues);
+                        localStorage.setItem('kario-filter-values', JSON.stringify(newValues));
+                      }} />
 
                         {/* Priority Filter */}
-                        <InlinePriorityFilter
-                          isActive={filterSettings.priority}
-                          selectedPriorities={filterValues.priorities}
-                          onToggle={(checked) => {
-                            const newSettings = { ...filterSettings, priority: checked };
-                            setFilterSettings?.(newSettings);
-                            localStorage.setItem('kario-filter-settings', JSON.stringify(newSettings));
-                          }}
-                          onSelect={(priorities) => {
-                            const newValues = { ...filterValues, priorities };
-                            setFilterValues?.(newValues);
-                            localStorage.setItem('kario-filter-values', JSON.stringify(newValues));
-                          }}
-                        />
+                        <InlinePriorityFilter isActive={filterSettings.priority} selectedPriorities={filterValues.priorities} onToggle={checked => {
+                        const newSettings = {
+                          ...filterSettings,
+                          priority: checked
+                        };
+                        setFilterSettings?.(newSettings);
+                        localStorage.setItem('kario-filter-settings', JSON.stringify(newSettings));
+                      }} onSelect={priorities => {
+                        const newValues = {
+                          ...filterValues,
+                          priorities
+                        };
+                        setFilterValues?.(newValues);
+                        localStorage.setItem('kario-filter-values', JSON.stringify(newValues));
+                      }} />
 
                         {/* Label Filter */}
-                        <InlineLabelFilter
-                          isActive={filterSettings.label}
-                          selectedLabels={filterValues.labels}
-                          onToggle={(checked) => {
-                            const newSettings = { ...filterSettings, label: checked };
-                            setFilterSettings?.(newSettings);
-                            localStorage.setItem('kario-filter-settings', JSON.stringify(newSettings));
-                          }}
-                          onSelect={(labels) => {
-                            const newValues = { ...filterValues, labels };
-                            setFilterValues?.(newValues);
-                            localStorage.setItem('kario-filter-values', JSON.stringify(newValues));
-                          }}
-                        />
+                        <InlineLabelFilter isActive={filterSettings.label} selectedLabels={filterValues.labels} onToggle={checked => {
+                        const newSettings = {
+                          ...filterSettings,
+                          label: checked
+                        };
+                        setFilterSettings?.(newSettings);
+                        localStorage.setItem('kario-filter-settings', JSON.stringify(newSettings));
+                      }} onSelect={labels => {
+                        const newValues = {
+                          ...filterValues,
+                          labels
+                        };
+                        setFilterValues?.(newValues);
+                        localStorage.setItem('kario-filter-values', JSON.stringify(newValues));
+                      }} />
                       </CollapsibleContent>
                     </Collapsible>
                   </div>
@@ -225,97 +260,73 @@ const TasksHeader = ({
 
           {/* Tasks Creating Button */}
           <div className="relative mt-7">
-            <Button
-              onClick={onCreateTask}
-              className="w-12 h-12 rounded-full transition-all duration-500 hover:scale-105"
-              style={{ backgroundColor: '#2e2e30' }}
-              size="icon"
-            >
-              <Plus 
-                className={`h-5 w-5 text-white transition-transform duration-500 ease-in-out ${
-                  isRotated ? 'rotate-180 scale-110' : 'rotate-0 scale-100'
-                }`} 
-              />
+            <Button onClick={onCreateTask} className="w-12 h-12 rounded-full transition-all duration-500 hover:scale-105" style={{
+            backgroundColor: '#2e2e30'
+          }} size="icon">
+              <Plus className={`h-5 w-5 text-white transition-transform duration-500 ease-in-out ${isRotated ? 'rotate-180 scale-110' : 'rotate-0 scale-100'}`} />
             </Button>
           </div>
           
           {/* Custom Search Bar */}
           <div className="relative mt-7 w-[100px]">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <Input
-              type="text"
-              placeholder="/+T"
-              className="
+            <Input type="text" placeholder="/+T" className="
                 bg-[#1b1b1b] border border-[#414141] text-white placeholder-gray-400 pl-10 h-10
                 hover:bg-[#252525] hover:border-[#555555]
                 focus:border-[#666666] focus:bg-[#252525]
                 rounded-full transition-all duration-300 text-sm w-full
-              "
-            />
+              " />
           </div>
         </div>
         
         {/* Task Indicators */}
         <div className="flex items-center gap-6 mt-7">
-          <div 
-            onClick={() => setCurrentTaskView('total')}
-            className="flex flex-col items-center group cursor-pointer transition-all duration-300"
-          >
-            <span className={`font-orbitron text-2xl font-bold text-white ${
-              currentTaskView === 'total' ? 'border-b-2 border-white' : ''
-            }`}>
+          <div onClick={() => setCurrentTaskView('total')} className="flex flex-col items-center group cursor-pointer transition-all duration-300 px-[3px]">
+            <span className={`font-orbitron text-2xl font-bold text-white ${currentTaskView === 'total' ? 'border-b-2 border-white' : ''}`}>
               {totalTasks}
             </span>
             <span className="text-xs text-gray-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               Total
             </span>
           </div>
-          <div 
-            onClick={() => setCurrentTaskView('drafts')}
-            className="flex flex-col items-center group cursor-pointer transition-all duration-300"
-          >
-            <span className={`font-orbitron text-2xl font-bold ${
-              currentTaskView === 'drafts' ? 'border-b-2' : ''
-            }`} style={{ color: '#C4B5FD', borderColor: currentTaskView === 'drafts' ? '#C4B5FD' : 'transparent' }}>
+          <div onClick={() => setCurrentTaskView('drafts')} className="flex flex-col items-center group cursor-pointer transition-all duration-300 px-[10px]">
+            <span className={`font-orbitron text-2xl font-bold ${currentTaskView === 'drafts' ? 'border-b-2' : ''}`} style={{
+            color: '#C4B5FD',
+            borderColor: currentTaskView === 'drafts' ? '#C4B5FD' : 'transparent'
+          }}>
               {draftTasks}
             </span>
             <span className="text-xs text-gray-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               Drafts
             </span>
           </div>
-          <div 
-            onClick={() => setCurrentTaskView('pending')}
-            className="flex flex-col items-center group cursor-pointer transition-all duration-300"
-          >
-            <span className={`font-orbitron text-2xl font-bold ${
-              currentTaskView === 'pending' ? 'border-b-2' : ''
-            }`} style={{ color: '#f59e0b', borderColor: currentTaskView === 'pending' ? '#f59e0b' : 'transparent' }}>
+          <div onClick={() => setCurrentTaskView('pending')} className="flex flex-col items-center group cursor-pointer transition-all duration-300">
+            <span className={`font-orbitron text-2xl font-bold ${currentTaskView === 'pending' ? 'border-b-2' : ''}`} style={{
+            color: '#f59e0b',
+            borderColor: currentTaskView === 'pending' ? '#f59e0b' : 'transparent'
+          }}>
               {pendingTasks}
             </span>
             <span className="text-xs text-gray-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               Pending
             </span>
           </div>
-          <div 
-            onClick={() => setCurrentTaskView('completed')}
-            className="flex flex-col items-center group cursor-pointer transition-all duration-300"
-          >
-            <span className={`font-orbitron text-2xl font-bold ${
-              currentTaskView === 'completed' ? 'border-b-2' : ''
-            }`} style={{ color: '#10B981', borderColor: currentTaskView === 'completed' ? '#10B981' : 'transparent' }}>
+          <div onClick={() => setCurrentTaskView('completed')} className="flex flex-col items-center group cursor-pointer transition-all duration-300">
+            <span className={`font-orbitron text-2xl font-bold ${currentTaskView === 'completed' ? 'border-b-2' : ''}`} style={{
+            color: '#10B981',
+            borderColor: currentTaskView === 'completed' ? '#10B981' : 'transparent'
+          }}>
               {completedTasks}
             </span>
             <span className="text-xs text-gray-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               Completed
             </span>
           </div>
-          <div 
-            onClick={() => setCurrentTaskView('deleted')}
-            className="flex flex-col items-center group cursor-pointer transition-all duration-300"
-          >
-            <span className={`font-orbitron text-2xl font-bold ${
-              currentTaskView === 'deleted' ? 'border-b-2' : ''
-            }`} style={{ color: '#F87171', borderColor: currentTaskView === 'deleted' ? '#F87171' : 'transparent' }}>
+          <div onClick={() => setCurrentTaskView('deleted')} className="flex flex-col items-center group cursor-pointer transition-all duration-300">
+            <span className={`font-orbitron text-2xl font-bold ${currentTaskView === 'deleted' ? 'border-b-2' : ''}`} style={{
+            color: '#F87171',
+            borderColor: currentTaskView === 'deleted' ? '#F87171' : 'transparent'
+          }}>
               {deletedTasks}
             </span>
             <span className="text-xs text-gray-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
@@ -328,25 +339,18 @@ const TasksHeader = ({
       {/* Tasks Heading */}
       <div className="px-4 mt-[20px]">
         <div className="ml-20">
-          <h1 className="text-white font-semibold" style={{ fontSize: '3.5rem' }}>
-            {currentTaskView === 'total' ? (
-              'Tasks'
-            ) : (
-              <span>
-                <span 
-                  onClick={() => setCurrentTaskView('total')}
-                  className="text-gray-400 cursor-pointer hover:text-white transition-colors duration-200 border-b-2 border-gray-400"
-                >
+          <h1 className="text-white font-semibold" style={{
+          fontSize: '3.5rem'
+        }}>
+            {currentTaskView === 'total' ? 'Tasks' : <span>
+                <span onClick={() => setCurrentTaskView('total')} className="text-gray-400 cursor-pointer hover:text-white transition-colors duration-200 border-b-2 border-gray-400">
                   Tasks
                 </span>
                 <span> &gt; {currentTaskView.charAt(0).toUpperCase() + currentTaskView.slice(1)}</span>
-              </span>
-            )}
+              </span>}
           </h1>
         </div>
       </div>
-    </>
-  );
+    </>;
 };
-
 export default TasksHeader;
